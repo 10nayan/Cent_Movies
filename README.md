@@ -5,13 +5,13 @@ You can check out this website clicking here, https://centmovies.herokuapp.com
 This website has basic features of like, dislike and adding reviews to hundreds of movies listed there. The movies listed in this website can be grouped by director name, cast name, language and by year of release. 
 The movies can also be ordered by the available genre. The data used for this website is got from IMDB official website.
 ## Files in the project
-- **application.py**: This is the main app file and contains the logic of all features and the Flask-SocketIO backend for the app.
-- **models.py**: Contains Flask-SQLAlchemy models used for user registration and login in application.py
-- **create.py**: optional file only required if repo is to be cloned. *See 'Usage' section below.*
-- **Procfile**: file required for Heroku
+- **/movie/views.py**: This is the app file that contains the logic of all the view functions in the backend which generate dynamic contents to HTML template.
+- **/movie/models.py**: Contains Django models used for storing movie data.
+- **/movie/forms.py**: python app file  required for creatingform in this appliation.
+- **Procfile**: file required for deployment i heroku.
 - **requirements.txt**: list of Python packages installed (also required for Heroku)
-- **templates/**: folder with all HTML files
-- **static/**: for with all JS scripts and CSS files
+- **movie/templates/**: folder with all HTML files
+- **movie/static/**: for all JS scripts and CSS files
 ## Usage
 ### Clone/Modify app
 1. Modify application.py to replace the secret key *(i.e. os.environ.get('SECRET_KEY'))* with a secret key of your choice and the database link *(i.e. os.environ.get('DATABASE_URL'))* with the link to your own database.
