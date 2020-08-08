@@ -1,0 +1,27 @@
+#outer {
+background-color: #343a40;
+height: 100%;
+min-height: 85vh;
+}
+h1,h3,p{
+	color: white;
+}
+#btn{
+	background-color: white;
+	color:#343a40;
+	font-size: 20px;
+}
+#btn:hover{
+	background-color: #343a40;
+	color:white;
+	border: 10px;
+	border: 2px solid white;
+}
+footer{
+	background-color: #343a40;
+}
+#inner {
+background-color: #343a40;
+height: 100%;
+min-height: 100vh;
+}

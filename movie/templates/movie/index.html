@@ -1,0 +1,30 @@
+{% extends 'movie/base.html' %}
+{% block title %} movie {% endblock %}
+{% block static%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movie/style/index.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div id="outer" class="h-100 d-flex justify-content-center align-items-center text-center">
+	<div>
+  		<main role="main" class="inner cover">
+    		<h1 class="cover-heading">Welcome to Cent Movies</h1>
+    		<p class="lead">Cent Movies is a website for listing top 100 IMDB rated movies. Rate, view details, watch traillers and add your reviews to your favourite movies.</p>
+    		<p class="lead">
+      			<a href="{% url 'list' %}" id="btn" class="btn btn-outline-dark"><b>Click Here</b></a>
+    		</p>
+  </main>
+</div>
+</div>
+<footer>
+	<h3 class="text-center">
+	<span><a href="https://github.com/10nayan"><i class="fa fa-github" aria-hidden="true"></i></span></a>
+	<span><a href="https://twitter.com/Nayan10jp"><i class="fa fa-twitter" aria-hidden="true"></i></span></a>
+	<span><a href="https://www.linkedin.com/in/nayan-jyoti-patowary-7b0a97160/"><i class="fa fa-linkedin" aria-hidden="true"></i></span></a>
+	<br>
+	<br>
+	</h3>
+</footer>
+
+{% endblock %}
