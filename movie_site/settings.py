@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movie.apps.MovieConfig',
-    'import_export',
-    'herokuapp'
+    'import_export'
 ]
 
 MIDDLEWARE = [
