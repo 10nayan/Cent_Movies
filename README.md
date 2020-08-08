@@ -8,6 +8,10 @@ The movies can also be ordered by the available genre. The data used for this we
 - **/movie/views.py**: This is the app file that contains the logic of all the view functions in the backend which generate dynamic contents to HTML template.
 - **/movie/models.py**: Contains Django models used for storing movie data.
 - **/movie/forms.py**: python app file  required for creatingform in this appliation.
+- **/movie/urls.py**: python app file  required for url mapping to all the view functions.
+- **/movie/admin.py**: python app file  required for registering to django-administration of this appliation.
+- **/movie/tests.py**: python app file  required for testing of this appliation.
+- **/movie/apps.py**: python app file  required for registering the movie app to django movie_site project of this appliation.
 - **Procfile**: file required for deployment i heroku.
 - **requirements.txt**: list of Python packages installed (also required for Heroku)
 - **movie/templates/**: folder with all HTML files
