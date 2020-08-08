@@ -38,6 +38,6 @@ C:\<path to movie_site>\python manage.py startapp <your app name>
 ```
 ## Areas of improvement
 1. Style of this website can be improved to another level, I have written very less CSS, most of the time I used bootstrap template. Anyone can add custom CSS to improve the styling.
-2.Frontend user experience can be improved by using javascript framework or vanilla javascript.
+2. Frontend user experience can be improved by using javascript framework or vanilla javascript.
 ## Data Source
 1.https://www.imdb.com/ for getting all movie information.
