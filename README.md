@@ -12,30 +12,32 @@ The movies can also be ordered by the available genre. The data used for this we
 - **/movie/admin.py**: python app file  required for registering to django-administration of this appliation.
 - **/movie/tests.py**: python app file  required for testing of this appliation.
 - **/movie/apps.py**: python app file  required for registering the movie app to django movie_site project of this appliation.
+- **/movie_site/**: python main project folder in which movie app is created.
 - **Procfile**: file required for deployment i heroku.
 - **requirements.txt**: list of Python packages installed (also required for Heroku)
 - **movie/templates/**: folder with all HTML files
 - **movie/static/**: for all JS scripts and CSS files
 ## Usage
 ### Clone/Modify app
-1. Modify application.py to replace the secret key *(i.e. os.environ.get('SECRET_KEY'))* with a secret key of your choice and the database link *(i.e. os.environ.get('DATABASE_URL'))* with the link to your own database.
+1. Modify movie folder or create a new app in the main movie_site project folder.
 
-    The two lines to be edited in application.py are shown below:
+    For modifying existance code or creating new app, These lines need to be edited in movie_site/settings.py are shown below:
 ```python
-app.secret_key=os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL')
+SECRET_KEY ='<your secret key>'
+ALLOWED_HOSTS = ['<your allowed host>']
+DATABASES = {<your database settings>}
 ```
-2. Edit *create.py* to once again replace *os.environ.get('DATABASE_URL')* with the link to your database.
+2. Run makemigrations and migrate command from the terminal to create the table with the link to your database.
 
-3. Run *create.py* from the terminal to create the table to hold user credentials.
+3. Run createsuperuser command to register to django admin panel.
+
+4. Create new app in movie_site project folder using following command,
     
 ```console
-C:\Users\private>python create.py
+C:\<path to movie_site>\python manage.py startapp <your app name>
 ```
 ## Areas of improvement
 1. Style of this website can be improved to another level, I have written very less CSS, most of the time I used bootstrap template. Anyone can add custom CSS to improve the styling.
-2. Form validation in server side can be improved, as I have already used bootstrap client side form validation I didn't use Flask-WTForms to server side validation.
-## API used
-1.https://ipinfo.io for getting users geolocation for weather feature.
-
-2.https://api.weatherapi.com for live weather forecast at users location.
+2.Frontend user experience can be improved by using javascript framework or vanilla javascript.
+## Data Source
+1.https://www.imdb.com/ for getting all movie information.
