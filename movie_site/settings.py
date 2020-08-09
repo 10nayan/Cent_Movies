@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'wn3z0o^%s@n*xkay3#p*sv#e#x^lyw&q+a#i#4(!ka%rgy^-*n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['centmovies.herokuapp.com','127.0.0.1' ]
 

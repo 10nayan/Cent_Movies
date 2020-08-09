@@ -6,9 +6,9 @@ urlpatterns=[
     path('search',search,name='search'),
     path('<int:pk>/detail',MovieDetailView.as_view(),name='detail'),
     path('list/<str:genre>',genrelist_view,name='genre'),
-    path('<str:groupby_arg>',groupby_list_view,name='groupby'),
-    path('<str:groupby_arg>/<str:arg>',movie_list_view,name='new_list'),
+    path('groupby/<str:groupby_arg>',groupby_list_view,name='groupby'),
+    path('groupby/<str:groupby_arg>/<str:arg>',movie_list_view,name='new_list'),
     path('list/<int:key>/like',like_this_movie,name='like'),
     path('list/<int:key>/dislike',dislike_this_movie,name='dislike'),
-    path('/about',about, name='about')
+    path('about',about, name='about')
 ]
