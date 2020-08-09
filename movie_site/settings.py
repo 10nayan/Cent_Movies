@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wn3z0o^%s@n*xkay3#p*sv#e#x^lyw&q+a#i#4(!ka%rgy^-*n'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -75,19 +75,9 @@ WSGI_APPLICATION = 'movie_site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd37ait8j0jknig',
-        'USER': 'mitqoivxolkqli',
-        'PASSWORD': 'adb1aee7860a359845d893cd2d3021f9754cdd87e7155e77d116bac8ad07c220',
-        'HOST': 'ec2-54-75-244-161.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
-
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES[‘default’].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -125,3 +115,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+
