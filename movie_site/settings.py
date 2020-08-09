@@ -76,6 +76,18 @@ WSGI_APPLICATION = 'movie_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd37ait8j0jknig',
+        'USER': 'mitqoivxolkqli',
+        'PASSWORD': 'adb1aee7860a359845d893cd2d3021f9754cdd87e7155e77d116bac8ad07c220',
+        'HOST': 'ec2-54-75-244-161.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -113,7 +125,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
