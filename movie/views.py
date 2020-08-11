@@ -90,12 +90,12 @@ def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Like+=1
     obj.save()
-    return redirect('/list')
+    return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Dislike+=1
     obj.save()
-    return redirect('/list')
+    return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
     search_obj=request.POST.get('search_obj')
     movies_list=Movies.objects.filter(Name__icontains=search_obj)
