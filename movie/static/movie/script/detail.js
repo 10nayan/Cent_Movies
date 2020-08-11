@@ -2,6 +2,7 @@
     document.querySelector('#likebtn').onclick=()=>{
       const request=new XMLHttpRequest;
       request.open('GET','like',true);
+      console.log(request);
       request.onload=()=>{
         const data = JSON.parse(request.responseText);
         if ((data.success)&&(data.content=='Like')){

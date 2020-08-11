@@ -23,19 +23,19 @@
 			<p>Imdb Rating: {{object.ImdbRating}}</p>
 			<p>Genre: {{object.Genre}}</p>
 			<p><a href="https://en.wikipedia.org/wiki/{{object.Name}}">Know More</a></p>
-			<h3>How was this movie?</h3>
-				<h4>
-    
-				    <span id="likespan">{{object.Like}}</span>
-				    <button id="likebtn" type="submit" class="btn btn-primary">Like</button>
-				    
-				    <span id="dislikespan">{{object.Dislike}}</span>
-				    <button id="dislikebtn" type="submit" class="btn btn-primary">Dislike</button>
-				</h4>
 		</div>
 	</div>
 </div>
 <br>
+<div class="text-center">
+<h3>How was this movie?</h3>
+	<h4>
+    	<span id="likespan">{{object.Like}}</span>
+		<button id="likebtn" type="submit" class="btn btn-primary">Like</button>
+		<span id="dislikespan">{{object.Dislike}}</span>
+		<button id="dislikebtn" type="submit" class="btn btn-primary">Dislike</button>
+	</h4>
+</div>
 <h3 class="text-center">Write a review of {{object.Name}}</h3>
 	<div>
 	    <form method="POST">

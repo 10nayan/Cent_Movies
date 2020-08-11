@@ -5,7 +5,7 @@ from .forms import ReviewForm
 from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
 from django.views import View
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
