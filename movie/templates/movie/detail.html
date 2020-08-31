@@ -35,6 +35,11 @@
 		<span id="dislikespan">{{object.Dislike}}</span>
 		<button id="dislikebtn" type="submit" class="btn btn-primary">Dislike</button>
 	</h4>
+<h3>Want to save it for later?</h3>
+<form method="GET" action="{% url 'watchlist' object.pk  %}">
+	<button type="submit" class="btn btn-primary">Add to watchlist</button>
+</form>
+<br>
 </div>
 <br>
 <h3 class="text-center">Write a review of {{object.Name}}</h3>
@@ -53,7 +58,7 @@
 		<ul style="list-style-type:none">
 			{% for review in object.movie_review.all %}
 			<div id="review">
-				<li><span id="name">{{review.Name}}</span> <span id="date">{{review.Date}}</span> {{review.Review}}</li>
+				<li><span id="name">{{review.Name}}</span> <span id="date">{{review.Date}}</span> {{review.Review}}<li>
 			</div>
 			{% endfor %}
 		</ul>

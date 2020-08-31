@@ -1,0 +1,35 @@
+{% extends 'movie/base.html' %}
+{% block title %} signin {% endblock %}
+{% block content %}
+    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:500px">
+    <h1 style="font-size:50px;"class="text-center">Sign In</h1>
+    {% if messages %}
+    <div class="messages text-center">
+        {% for message in messages %}
+        <p {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} style="font-size: 20px;">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'signin' %}" method='POST'>
+      {% csrf_token %}
+  <div class="form-group" >
+    <input type="text" style="font-size: 20px;height:60px;" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" name="username">
+  </div>
+  <div class="form-group">
+    <input type="password" style="font-size: 20px;height:60px;" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1"style="height:20px;width:20px; border:5px;" >
+    <label class="form-check-label" for="exampleCheck1" style="font-size:20px;">Check me out</label>
+  </div>
+  <br>
+  <div class="text-center">
+  <button type="submit" style=" font-size: 20px;height:60px;" class="btn btn-primary btn-block">Sign In</button>
+</div>
+</form>
+<br>
+<button type="button" class="btn btn-outline-primary" style="font-size:20px; "onclick="window.location.href='/register'">Sign Up</button>
+<button type="button" class="btn btn-outline-primary" style="font-size: 20px;float: right;" onclick="window.location.href='/list'">Home</button>
+</div>
+{% endblock %}

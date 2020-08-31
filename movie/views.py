@@ -1,11 +1,17 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
-from .models import Movies
-from .forms import ReviewForm
-from django.views.generic import CreateView, DetailView,ListView,UpdateView,DeleteView
+from .models import Movies,Review,Profile,ProfileLikedMovie,ProfileDislikedMovie
+from .forms import ReviewForm,UserForm
+from django.views.generic import DetailView,ListView
 from django.views import View
 from django.urls import reverse
 from django.http import HttpResponse,JsonResponse
+from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
 class IndexView(View):
     template_name='movie/index.html'
@@ -90,11 +96,29 @@ def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Like+=1
     obj.save()
+    if request.user.is_authenticated:
+        usrname=request.user.get_username()
+        user=User.objects.get(username=usrname)
+        try:
+            ProfileLikedMovie.objects.get(Liked_list=obj,ProfileLinked=user)
+        except:
+            profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
+            profile.save()
+        return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
     return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Dislike+=1
     obj.save()
+    if request.user.is_authenticated:
+        usrname=request.user.get_username()
+        user=User.objects.get(username=usrname)
+        try:
+            ProfileDislikedMovie.objects.get(Dislike_list=obj,ProfileLinked=user)
+        except:
+            profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
+            profile.save()
+        return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
     return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
     search_obj=request.POST.get('search_obj')
@@ -105,3 +129,50 @@ def search(request):
     return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':'search'})
 def about(request):
     return render(request,'movie/about.html')
+def register(request):
+    if request.method=="POST":
+        form=UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully, signin now')
+            return redirect('/signin')
+    else:
+        form=UserForm()
+    return render(request,'movie/register.html',{'form':form})
+def signin(request):
+    if request.method=="POST":
+        username=request.POST['username']
+        password=request.POST['password']
+        user=authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request, f"You are now logged in as {username}")
+            return redirect('/signin')
+        else:
+            messages.warning(request,"Invalid username or password")
+            return redirect('/signin')
+    return render (request,'movie/signin.html')
+def signout(request):
+    logout(request)
+    return redirect('/signin')
+def profile_view(request):
+    obj1=ProfileLikedMovie.objects.filter(ProfileLinked=request.user)
+    obj2=ProfileDislikedMovie.objects.filter(ProfileLinked=request.user)
+    obj3=Profile.objects.filter(ProfileLinked=request.user)
+    return render (request,'movie/profile.html',{'object1':obj1,'object2':obj2,'object3':obj3})
+@login_required(login_url='signin')
+def add_to_watchlist(request,key):
+    usrname=request.user.get_username()
+    obj=Movies.objects.get(pk=key)
+    user=User.objects.get(username=usrname)
+    try:
+        Profile.objects.get(Watch_list=obj,ProfileLinked=user)
+    except:
+        profile=Profile(Watch_list=obj,ProfileLinked=user)
+        profile.save()
+    finally:
+        return redirect('/profile')
+def remove_from_watchlist(request,key):
+    profile=Profile.objects.get(pk=key)
+    profile.delete()
+    return redirect('/profile')
