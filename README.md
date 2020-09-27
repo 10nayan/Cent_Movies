@@ -1,4 +1,11 @@
 # Movie Website using Django and deployed in Heroku
+<img src="screenshot_readme/Screenshot (56).png">
+<img src="screenshot_readme/Screenshot (57).png">
+<img src="screenshot_readme/Screenshot (58).png">
+<img src="screenshot_readme/Screenshot (59).png">
+<img src="screenshot_readme/Screenshot (60).png">
+<img src="screenshot_readme/Screenshot (61).png">
+
 ## Introduction
 This website is built with Django which is a python framework for web development.
 You can check out this website clicking here, https://centmovies.herokuapp.com
