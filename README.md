@@ -21,7 +21,9 @@ The movies can also be ordered by the available genre. The data used for this we
 - **/movie/tests.py**: python app file  required for testing of this appliation.
 - **/movie/apps.py**: python app file  required for registering the movie app to django movie_site project of this appliation.
 - **/movie_site/**: python main project folder in which movie app is created.
-- **Procfile**: file required for deployment i heroku.
+- **Procfile**: file required for deployment in heroku.
+- **.travis.yml**: file required for automate testing in travis.
+- **LICENSE**: MIT LICENSE information.
 - **requirements.txt**: list of Python packages installed (also required for Heroku)
 - **movie/templates/**: folder with all HTML files
 - **movie/static/**: for all JS scripts and CSS files
