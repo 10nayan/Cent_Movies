@@ -1,4 +1,12 @@
-# Movie Website using Django and deployed in Heroku
+# Movie Website using Django and deployed in Heroku     [![Build Status](https://travis-ci.com/10nayan/Cent_Movies.svg?branch=master)](https://travis-ci.com/10nayan/Cent_Movies)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<img src="screenshot_readme/Screenshot (56).png">
+<img src="screenshot_readme/Screenshot (57).png">
+<img src="screenshot_readme/Screenshot (58).png">
+<img src="screenshot_readme/Screenshot (59).png">
+<img src="screenshot_readme/Screenshot (60).png">
+<img src="screenshot_readme/Screenshot (61).png">
+<img src="screenshot_readme/Screenshot (82).png">
+
 ## Introduction
 This website is built with Django which is a python framework for web development.
 You can check out this website clicking here, https://centmovies.herokuapp.com
