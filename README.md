@@ -1,4 +1,4 @@
-# Movie Website using Django and deployed in Heroku
+# Movie Website using Django and deployed in Heroku     [![Build Status](https://travis-ci.com/10nayan/Cent_Movies.svg?branch=master)](https://travis-ci.com/10nayan/Cent_Movies)
 <img src="screenshot_readme/Screenshot (56).png">
 <img src="screenshot_readme/Screenshot (57).png">
 <img src="screenshot_readme/Screenshot (58).png">
