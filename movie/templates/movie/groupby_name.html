@@ -1,0 +1,67 @@
+{% extends 'movie/base.html' %}
+{% block title %} movie {% endblock %}
+{% block static %}
+{% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'movie/style/rating.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<h1 class="text-center">This is  {{genre}} section</h1>
+<div class="container">
+    <div style="width: 25%;height: 100%;float: left;">
+        {% for director in page_obj %}   
+        <ul>
+            <li><a href="{% url 'new_list' genre director %}">{{director}}</a></li>
+        </ul>
+        {% endfor %}
+    </div>
+    <div style="position: relative; width: 75%; height: 100%; float: right;" class="row">
+        {% for movie in movies_list %}   
+        <div class="col-12 col-md-4" style="height:400px;">
+            {% load static %}
+            <a href="{% url 'detail' movie.pk %}">
+            <img src="{% static 'movie/image/' %}{{movie.id}}.jpg">
+            </a>
+            <h3><a href="{% url 'detail' movie.pk %}">{{movie.show_name}}</a></h3>
+            <div>
+                <span class="fa-fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span>{{movie.ImdbRating}}</span>
+                <span>Like </span>
+                <span>{{movie.Like}}</span>
+                <span>Dislike</span>
+                <span>{{movie.Dislike}}</span>
+            </div>
+            {% if movie.Availbility %}
+            <i class="fa fa-check" aria-hidden="true">Availble in {{movie.Availbility}}</i>
+            {% else %}
+            <i class="fa fa-times" aria-hidden="true"> Not Available</i>
+            {% endif %}
+            <form target="_blank" method="POST" action="https://www.youtube.com/results?search_query={{movie.search_trailler}}">
+                 <button type="submit" class="btn btn-primary">Click to Watch Trailler</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+<div class="pagination justify-content-center">
+    <nav style="position: fixed; left:50% ;bottom: 0; aria-label="Page navigation example">
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item current">
+            <a class="page-link"> {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

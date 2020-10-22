@@ -78,6 +78,7 @@ def groupby_list_view(request,groupby_arg):
         page_obj = paginator.get_page(page_number)
 
     return render(request,'movie/groupby.html',{'page_obj': page_obj,'groupby_arg':groupby_arg})
+    """
 def movie_list_view(request,groupby_arg,arg):
     movies_list=Movies.objects.all().order_by('id')
     if groupby_arg=='Director':
@@ -92,6 +93,28 @@ def movie_list_view(request,groupby_arg,arg):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':groupby_arg})
+    """
+def movie_list_view(request,groupby_arg,arg):
+    main_movies_list=Movies.objects.all()
+    if groupby_arg=='Director':
+        movies_list=Movies.objects.filter(Director=arg)
+        groupby_obj=sorted(set([i.Director for i in main_movies_list]))
+    if groupby_arg=='Year':
+        movies_list=Movies.objects.filter(ReleaseYear=arg)
+        groupby_obj=sorted(set([i.ReleaseYear for i in main_movies_list]))
+    if groupby_arg=='Language':
+        movies_list=Movies.objects.filter(Language=arg)
+        groupby_obj=list(set([i.Language for i in main_movies_list]))
+    if groupby_arg=='Cast':
+        movies_list=Movies.objects.filter(Cast_I=arg)| Movies.objects.filter( Cast_II=arg)
+        cast_list1=[i.Cast_I for i in main_movies_list]
+        cast_list2=[j.Cast_II for j in main_movies_list]
+        groupby_obj=cast_list=sorted(set([*cast_list1,*cast_list2]))
+    paginator = Paginator(groupby_obj,20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'movie/groupby_name.html',{'page_obj': page_obj,'genre':groupby_arg,'groupby_obj':groupby_obj,'movies_list':movies_list})
+    """
 def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
     obj.Like+=1
@@ -106,7 +129,36 @@ def like_this_movie(request,key):
             profile.save()
         return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
     return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
+    """
+def like_this_movie(request,key):
+    if request.session.get('visited_list') is None:
+        request.session['visited_list']=[]
+    #print(request.session.get('visited_list'))
+    if (request.session.get('first_visit')==False)& (key in request.session.get('visited_list')):
+        #print(request.session.get('first_visit'))
+        return HttpResponse("You have already liked this, go back to home page")
+    obj=Movies.objects.get(pk=key)
+    obj.Like+=1
+    obj.save()
+    if request.user.is_authenticated:
+        usrname=request.user.get_username()
+        user=User.objects.get(username=usrname)
+        try:
+            ProfileLikedMovie.objects.get(Liked_list=obj,ProfileLinked=user)
+        except:
+            profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
+            profile.save()
+        return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
+    request.session['first_visit']=False
+    request.session['visited_list'].append(key)
+    #print(request.session['visited_list'])
+    return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
+    if request.session.get('visited_lst') is None:
+        request.session['visited_lst']=[]
+    if (request.session.get('first_vst')==False)& (key in request.session.get('visited_lst')):
+        print(request.session.get('first_visit'))
+        return HttpResponse("You have already disliked this, go back to home page")
     obj=Movies.objects.get(pk=key)
     obj.Dislike+=1
     obj.save()
@@ -119,6 +171,8 @@ def dislike_this_movie(request,key):
             profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
             profile.save()
         return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
+    request.session['first_vst']=False
+    request.session['visited_lst'].append(key)
     return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
 def search(request):
     search_obj=request.POST.get('search_obj')
