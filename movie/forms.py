@@ -4,6 +4,7 @@ from .models import Review
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
+#Model form is created to store form input to our database model
 class ReviewForm(ModelForm):
 	class Meta:
 		model=Review
@@ -12,6 +13,7 @@ class ReviewForm(ModelForm):
 		super().__init__(*args, **kwargs)
 		self.fields['Name'].widget.attrs.update({'class': 'form-control','placeholder':'Type your name','label':None})
 		self.fields['Review'].widget.attrs.update({'class':'form-control','placeholder':'Write your review'})
+#UserForm is created to store user registration data to our User model
 class UserForm(UserCreationForm):
     class Meta:
         model=User
