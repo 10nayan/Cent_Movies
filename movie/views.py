@@ -27,7 +27,7 @@ class MovieListView(ListView):
     paginate_by=8
 
 #class based moviedetailview  used to query a particular row of 
-#Movie model by its pk coloumn and render its details to html templates in a GET request
+#Movie model by its pk  and render its details to html templates in a GET request
 #but for a  POST request a review form is submitted in the movie instance   
 class MovieDetailView(DetailView):
     template_name='movie/detail.html'
@@ -45,7 +45,8 @@ class MovieDetailView(DetailView):
             mform.MovieLinked=Movies.objects.get(pk=primary_key)
             mform.save()
             return redirect(f'/{primary_key}/detail')
-#this functionn takes an argument genre and renders genre wise movies list to web page
+
+#this view functionn takes argument genre and renders genre wise movies list to web page
 def genrelist_view(request,genre):
     movies_list=Movies.objects.filter(Genre__contains=genre)
     paginator = Paginator(movies_list,8)
@@ -59,6 +60,7 @@ def groupby_list_view(request,groupby_arg):
     movies_list=Movies.objects.all()
     page_obj=[]
     if groupby_arg=='Director':
+        # first director coloumn is accessed from movies table and then unique names are sorted
         director_list=sorted(set([i.Director for i in movies_list]))
         paginator = Paginator(director_list,12)
         page_number = request.GET.get('page')
@@ -82,12 +84,14 @@ def groupby_list_view(request,groupby_arg):
         page_obj = paginator.get_page(page_number)
 
     return render(request,'movie/groupby.html',{'page_obj': page_obj,'groupby_arg':groupby_arg})
-#this view function takes two argument, a groupby argument and a another argument then returns
+#this view function takes another two argument, a groupby argument and a other  argument then returns
 # that particuler instances's detail view
 def movie_list_view(request,groupby_arg,arg):
     main_movies_list=Movies.objects.all()
     if groupby_arg=='Director':
+        # movies_list is got from filtering movie table's director coloumn with input argument
         movies_list=Movies.objects.filter(Director=arg)
+        #then movies_list's unique name is sorted and stored as groupby_arg
         groupby_obj=sorted(set([i.Director for i in main_movies_list]))
     if groupby_arg=='Year':
         movies_list=Movies.objects.filter(ReleaseYear=arg)
@@ -105,7 +109,7 @@ def movie_list_view(request,groupby_arg,arg):
     page_obj = paginator.get_page(page_number)
     return render(request,'movie/groupby_name.html',{'page_obj': page_obj,'genre':groupby_arg,'groupby_obj':groupby_obj,'movies_list':movies_list})
 
-#this function takes a key as argument and send a AJAX request after which DOM field is updated
+#this function takes a key as argument and send a Json response to AJAX call after which DOM field is updated
 #according to the request, if a user is authorized , liked movie is also added to the users ProfileLikedMovie model
 #if session's "first_visit" is True then user can like this movie but after every attempt it resets to False
 # sessions "visited_list " is updated with movies object pk, after a user liked a movie object
