@@ -45,6 +45,13 @@ class MovieDetailView(DetailView):
             mform.MovieLinked=Movies.objects.get(pk=primary_key)
             mform.save()
             return redirect(f'/{primary_key}/detail')
+#this functionn takes an argument genre and renders genre wise movies list to web page
+def genrelist_view(request,genre):
+    movies_list=Movies.objects.filter(Genre__contains=genre)
+    paginator = Paginator(movies_list,8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':genre})
 
 #this view function takes an groupby argument and returns movies list categorized with the 
 # input groupby argument and renders it
