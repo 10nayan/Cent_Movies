@@ -114,63 +114,52 @@ def movie_list_view(request,groupby_arg,arg):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request,'movie/groupby_name.html',{'page_obj': page_obj,'genre':groupby_arg,'groupby_obj':groupby_obj,'movies_list':movies_list})
-    """
+
 def like_this_movie(request,key):
     obj=Movies.objects.get(pk=key)
-    obj.Like+=1
-    obj.save()
-    if request.user.is_authenticated:
-        usrname=request.user.get_username()
-        user=User.objects.get(username=usrname)
-        try:
-            ProfileLikedMovie.objects.get(Liked_list=obj,ProfileLinked=user)
-        except:
-            profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
-            profile.save()
-        return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
-    return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
-    """
-def like_this_movie(request,key):
     if request.session.get('visited_list') is None:
         request.session['visited_list']=[]
-    #print(request.session.get('visited_list'))
     if (request.session.get('first_visit')==False)& (key in request.session.get('visited_list')):
-        #print(request.session.get('first_visit'))
         return HttpResponse("You have already liked this, go back to home page")
-    obj=Movies.objects.get(pk=key)
-    obj.Like+=1
-    obj.save()
     if request.user.is_authenticated:
         usrname=request.user.get_username()
         user=User.objects.get(username=usrname)
         try:
             ProfileLikedMovie.objects.get(Liked_list=obj,ProfileLinked=user)
+            return JsonResponse({'success':False})
         except:
+            obj.Like+=1
+            obj.save()
             profile=ProfileLikedMovie(Liked_list=obj,ProfileLinked=user)
             profile.save()
-        return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
+            return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
+
+    obj.Like+=1
+    obj.save()
     request.session['first_visit']=False
     request.session['visited_list'].append(key)
-    #print(request.session['visited_list'])
     return JsonResponse({'success':True,'content':'Like','Like':obj.Like})
 def dislike_this_movie(request,key):
+    obj=Movies.objects.get(pk=key)
     if request.session.get('visited_lst') is None:
         request.session['visited_lst']=[]
     if (request.session.get('first_vst')==False)& (key in request.session.get('visited_lst')):
         print(request.session.get('first_visit'))
         return HttpResponse("You have already disliked this, go back to home page")
-    obj=Movies.objects.get(pk=key)
-    obj.Dislike+=1
-    obj.save()
     if request.user.is_authenticated:
         usrname=request.user.get_username()
         user=User.objects.get(username=usrname)
         try:
             ProfileDislikedMovie.objects.get(Dislike_list=obj,ProfileLinked=user)
+            return JsonResponse({'success':False})
         except:
+            obj.Dislike+=1
+            obj.save()
             profile=ProfileDislikedMovie(Dislike_list=obj,ProfileLinked=user)
             profile.save()
-        return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
+            return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
+    obj.Dislike+=1
+    obj.save()
     request.session['first_vst']=False
     request.session['visited_lst'].append(key)
     return JsonResponse({'success':True,'content':'Dislike','Dislike':obj.Dislike})
