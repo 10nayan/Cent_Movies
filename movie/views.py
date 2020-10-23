@@ -28,10 +28,7 @@ class MovieDetailView(DetailView):
         context=super().get_context_data(**kwargs)
         context['form']=ReviewForm()
         return context
-    """
-    def get(self,request,*args,**kwargs):
-        return render(request,self.template_name,{'form':ReviewForm()})
-    """
+
     def post(self,request,**kwargs):
         primary_key=kwargs['pk']
         form=ReviewForm(request.POST)
@@ -40,10 +37,6 @@ class MovieDetailView(DetailView):
             mform.MovieLinked=Movies.objects.get(pk=primary_key)
             mform.save()
             return redirect(f'/{primary_key}/detail')
-    """
-    def get_success_url(self):
-        return reverse('list')
-    """
 def genrelist_view(request,genre):
     movies_list=Movies.objects.filter(Genre__contains=genre)
     paginator = Paginator(movies_list,8)
@@ -55,7 +48,6 @@ def groupby_list_view(request,groupby_arg):
     page_obj=[]
     if groupby_arg=='Director':
         director_list=sorted(set([i.Director for i in movies_list]))
-       # cmn_dir_list=list(set([i for i in director_list if director_list.count(i)>2]))
         paginator = Paginator(director_list,12)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -78,22 +70,7 @@ def groupby_list_view(request,groupby_arg):
         page_obj = paginator.get_page(page_number)
 
     return render(request,'movie/groupby.html',{'page_obj': page_obj,'groupby_arg':groupby_arg})
-    """
-def movie_list_view(request,groupby_arg,arg):
-    movies_list=Movies.objects.all().order_by('id')
-    if groupby_arg=='Director':
-        movies_list=Movies.objects.filter(Director=arg)
-    if groupby_arg=='Year':
-        movies_list=Movies.objects.filter(ReleaseYear=arg)
-    if groupby_arg=='Language':
-        movies_list=Movies.objects.filter(Language=arg)
-    if groupby_arg=='Cast':
-        movies_list=Movies.objects.filter(Cast_I=arg)| Movies.objects.filter( Cast_II=arg)
-    paginator = Paginator(movies_list,8)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request,'movie/genre.html',{'page_obj': page_obj,'genre':groupby_arg})
-    """
+
 def movie_list_view(request,groupby_arg,arg):
     main_movies_list=Movies.objects.all()
     if groupby_arg=='Director':

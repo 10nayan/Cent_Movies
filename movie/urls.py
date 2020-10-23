@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import IndexView,MovieListView,register,signin,search,MovieDetailView,genrelist_view,groupby_list_view,movie_list_view,like_this_movie,dislike_this_movie,about,signout,profile_view,add_to_watchlist,remove_from_watchlist,signin
+# urlpatterns map our view function or class based view to respective urls.
 urlpatterns=[
     path('', IndexView.as_view(),name='index'),
     path('list', MovieListView.as_view(),name='list'),

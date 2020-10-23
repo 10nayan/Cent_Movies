@@ -1,8 +1,11 @@
+
   document.addEventListener('DOMContentLoaded',()=>{
     document.querySelector('#likebtn').onclick=()=>{
+      //this request a get request to server when like button is pressed
       const request=new XMLHttpRequest;
       request.open('GET','like',true);
       console.log(request);
+      //when the request is receives it update the dom content according to it and disabled the button
       request.onload=()=>{
         const data = JSON.parse(request.responseText);
         if ((data.success)&&(data.content=='Like')){

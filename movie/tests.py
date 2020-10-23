@@ -3,6 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from .models import Movies
 from .forms import UserForm
+#these are the unit test cases to test our application
 class MovieTestCase(TestCase):
     def setUp(self):
         Movies.objects.create(Director="Raju Hirani",Cast_I="Amir Khan",Cast_II="Karina Kapoor",Name="3 idiots",ReleaseYear=2009,ImdbRating="8.3",Genre="comedy",Language="hindi",Like=3,Dislike=1,avail="Youtube")

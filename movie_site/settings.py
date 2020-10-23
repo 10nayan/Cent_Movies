@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'movie.apps.MovieConfig',
-    'import_export'
+    'movie.apps.MovieConfig',#our app pat is registers here
+    'import_export'# import and export for movie data to csv 
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'movie_site.wsgi.application'
 """
 WARNING
 (use following database setting for development server)
-"""
+
 DATABASES = {}
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
